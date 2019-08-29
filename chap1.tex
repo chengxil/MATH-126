@@ -1,0 +1,108 @@
+%!TEX root = ./main.tex
+\section*{Intro}
+\begin{question}
+	Why study PDE?
+\end{question}
+\begin{answer}
+	TL;DR. It's useful.
+\end{answer}
+\begin{note}
+	Office hour : MWF 9-10AM 895 Evans, GSI Office hour : MW 1-3 PM 1049 Evans
+\end{note}
+\section{Introduction}
+\begin{question}
+	What is a partial differential equation?
+\end{question}
+\begin{example}
+	This is an example of ODE:
+	\[ u  = u(x), \qquad \frac{d}{dx} u = u.\]
+\end{example}
+\begin{example}
+	A PDE consist of the form
+	\[ u = u(x_1, x_2, \ldots, x_d), \qquad u_{x_k} = \frac{\partial u}{\partial x_k}\]
+	Where $x_i$ are scalars.
+\end{example}
+\begin{example}
+	The most general form of a PDE of first order in two dimension, say $u = u(x,y)$ and of the form
+	\[ F(x,y,u(x,y), u_x(x,y),u_y(x,y)) = 0 , \mathrm{ or } F(x,y,u, u_x, u_y) = 0\]
+
+\end{example}
+\begin{example}
+	The most general form of a PDE of second order in two dimension, say $u = u(x,y)$ and of the form
+	\[ G(x,y,u, u_x, u_y, u_{xx}, u_{yy}, u_{xy}) = 0 \]
+\end{example}
+\begin{definition}
+	A vector $x$ is defined as
+	\[ x = \vec x = (x_1, x_2, \ldots, x_n).\]
+\end{definition}
+\begin{definition}
+	Let $u$ be a function of vector $x$ of $n$-dimension. The gradient of $u$ is denoted as
+	\[ \nabla u = (u_{x_1}, u_{x_2}, \ldots, u_{x_n})\]
+\end{definition}
+\begin{example}
+	\begin{enumerate}
+		\item Linear transport equation $ \quad u_t + bu_t = 0, \quad b \in \b R$
+
+		\item Burgher's Equation 
+		$\quad u_t + u \cdot u_x = 0$
+		\item Laplace's Equation
+		$\quad u_{xx} + u_{yy} = 0$
+		\item Hermite Equation
+		$\quad -(u_{xx} + u_{yy}) = \lambda u, \quad \lambda \in \b R$
+		\item Wave with intersection 
+		$\quad u_{tt} - u_{xx} + u^3 = 0$
+		\item Linear diffusion with source
+		$\quad u_t - u_{xx} - f(x,t) = 0$
+		\item Schroedinger's equation 
+		$\quad u_t - i \cdot u_{xx} = 0$
+	\end{enumerate}
+\end{example}
+\begin{example}[Cauchy-Riemann Equation]
+	\[ \left\{ \begin{array}{cc}
+		u_x &= u_y \\
+		u_y &= -u_x
+	\end{array} \right.\]
+\end{example}
+\begin{remark}
+	Things that we are interested in
+	\begin{enumerate}
+		\item Find analytical formulas for some specific PDE's
+		\item Well-possessedness
+		\begin{itemize}
+			\item Existence (Does there exists a solution?)
+			\item Uniqueness (Is this the only solution?)
+			\item Stability (If I change the data slightly, does the solution changes just by a little bit?)
+		\end{itemize}
+		\item Predicting qualitative (and sometimes quantitative) behavior of the solution without having a solution formula. 
+		\item Devise an analyze numerical algorithms to approximate solutions.
+	\end{enumerate}
+\end{remark}
+\begin{remark}[Digression to Linear Algebra]
+	Let $\mathscr L$ be a linear operator in a function space.
+	\[ \forall v,u,c \qquad \mathscr L(u + v) = \mathscr L (u) + \mathscr L(v), \quad \mathscr L(cu) = c\mathscr L(u)\]
+\end{remark}
+\begin{definition}
+	A PDE is called homogeneous linear PDE if it's of the form $\mathscr L(u) = 0$. If it's the form $\mathscr L(u) = f$, then it's called inhomogeneous PDE.
+\end{definition} 
+\begin{example}
+	Consider the equation
+	\[ \cos(xy) u_x + \sin \left( e^x \right) u_yy = e^{x^2\sin (y)} \]
+	Let 
+	\[ \mathscr L(u(x,y)) = \cos(xy) u_x + \sin \left( e^x \right) u_{yy} \]
+	$\mathscr L$ is a linear operator, so the PDE is an inhomogeneous linear PDE.
+\end{example}
+\begin{theorem}[Principle of superposition]
+	Let $u_1, u_2, \ldots, u_n$ be solutions of $\mathscr L(u_k) = 0$, and let $c_1, c_2, \ldots, c_n$ be scalars. then
+	\[ u(x) = \sum_{i = 1}^{n} c_i u_i(x) \quad \mathrm{ solves } \quad \mathscr L(u) = 0\]
+\end{theorem}
+\begin{example}[Cool problem]
+	\[ \left\{\begin{array}{rl}
+		u_t + u \cdot \nabla u - \mu \triangle u &= - \nabla p \\
+		\mathrm{div}\, u	&= 0 \end{array} \right.\]
+		where $u = u(x,y,z,t)$, $u = \begin{pmatrix}
+			u_1 \\
+			u_2 \\
+			u_3 \\
+		\end{pmatrix}$ velocity field, where $p$ is pressure and $\mu$ is the viscosity of the liquid.
+\end{example}
+$u_{yy} u_{xx} $

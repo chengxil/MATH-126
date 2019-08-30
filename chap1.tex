@@ -95,11 +95,124 @@
 \end{theorem}
 \begin{example}[Cool problem]
 	\[ \left\{\begin{array}{rl}
-		u_t + u \cdot \nabla u - \mu \triangle u &= - \nabla p \\
-		\mathrm{div}\, u	&= 0 \end{array} \right.\]
+		u_t + u \cdot \nabla u - \mu \triangle u =& \hspace{-2mm} - \nabla p \\
+		\mathrm{div}\, u =& \hspace{-2mm} 0 \end{array} \right.\]
 		where $u = u(x,y,z,t)$, $u = \begin{pmatrix}
 			u_1 \\
 			u_2 \\
 			u_3 \\
-		\end{pmatrix}$ velocity field, where $p$ is pressure and $\mu$ is the viscosity of the liquid.
+		\end{pmatrix}$ is a velocity field, where $p$ is pressure and $\mu$ is the viscosity of the liquid.
 \end{example}
+
+
+\section*{Review of Multivariable Calculus}
+\begin{definition}
+	Let $\vec x \in \b R^d$, the \textbf{Euclidean length} of $\vec x$ is defined as
+	\[ |\vec x| = \sqrt{\sum_{k=1}^{d} x_k^2}\]
+\end{definition}
+\begin{definition}[scalar product]
+	The dot product of two vectors $x$ and $\tilde x$ is defined as
+	\[ x \cdot \tilde x = \sum_{k=1}^{d} x_k \cdot \tilde x_k\]
+\end{definition}
+\begin{remark}
+	It's clear that $|x|^2 = x \cdot x$.
+\end{remark}
+\begin{definition}
+	For $r > 0$ and $x_0 \in \b R^d$ let
+	\[ B_r = \left\{ x \in \b R^d : |x - x_0| < r \right\}\]
+	This is a open ball of radius $r$ centered at $x_0$.
+\end{definition}
+\begin{definition}
+	A set $A \subset \b R^d$ is called \textbf{open} if for each $x \in A$, there exists $r > 0$ such that $B_r(x) \subset A$. 
+\end{definition}
+\begin{definition}
+	A set $V \subset \b R^d$ is called closed if $\b R^d \setminus V$ is open. 
+\end{definition}
+\begin{definition}
+	The \textbf{interior} of $A$, denoted as $\mathrm{int} A$ is are the points in $A$ such that there exists $r > 0$ with $B_r(x) \subset A$.
+\end{definition}
+\begin{theorem}
+	A set is open if and only if $\mathrm{int} A = A$.
+\end{theorem}
+\begin{definition}
+	The \textbf{closure} of $A \subset \b R^d$ is
+	\[ \bar A := A \cup \left\{ \text{ limit points of $A$} \right\}\]
+\end{definition}
+\begin{definition}
+	The boundary of the set $A \subset \b R^d$ is
+	\[ \partial A := A \setminus \mathrm{int} A\]
+\end{definition}
+\begin{theorem}[Heine-Borel Theorem]
+	A set is closed in $\b R^d$ if and only if it's closed and bounded.
+\end{theorem}
+\subsection{Differentiation}
+\begin{definition}
+	For $u = u(\vec x)$ we define the \textbf{gradient} of $u$ as
+	\[ \nabla u = \nabla u(x) := \left( \frac{\partial u}{\partial x_1}, \cdots, \frac{\partial u}{\partial x_d} \right) \]
+\end{definition}
+\begin{definition}[Laplace's operator]
+ $\triangle u = \triangle u(\vec x) := \sum_{k=1}^{d} \frac{\partial^2 u}{\partial x^2_k} = \sum_{k=1}^{d} u x_k \cdot x_k$.
+\end{definition}
+\begin{definition}
+	For a vector field $F = F(\vec x)$ we denote its divergence as
+	\[ \mathrm{div} F(x) = \sum_{k=1}^{d} \frac{\partial F_k}{\partial x_k}\] 
+\end{definition}
+\begin{remark}
+	$\triangle u = \mathrm{div} \nabla u$.
+\end{remark}
+\begin{exercise}
+	Compute the divergence of $F(\vec x) = \frac 12 \vec x = \frac 12(x_1, x_2), G(\vec x) = (-x_2, x_1)$.
+\end{exercise}
+\begin{proof}[Solution]
+	We have $\mathrm{div}F = 0$ and $\mathrm{div} G = 0$.
+\end{proof}
+\subsection{Integration}
+\begin{definition}
+	For $\omega \subset \b R^2, \Omega \subset \b R^3$ we definite the integral with respect to function $f$ as
+	\[ \int_\omega f(x,y) \,dx\,dy, \int_{\Omega} f(x,y,z)\, dx\,dy\,dz\]
+\end{definition}
+\begin{definition}
+	We define the volume of $\Omega \subset \in \b R^d$ as
+	\[ \mathrm{vol}_d(\Omega) = \int_\Omega 1 d\vec x \]
+\end{definition}
+\begin{remark}
+	If $|f(x)| \leq M$ for all $x \in \Omega$, then
+	\[ \left|\int_\Omega f(\vec x) \,d \vec x \right|\leq \int_\Omega |f(\vec x)|\,d\vec x \leq M \mathrm{vol}_d(\Omega)\]
+\end{remark}
+\section{Derivatives of Integrals}
+\begin{question}
+	Let $I(t)$ defined as
+	\[\int_{a(t)}^{b(t)} f(x,t)\, dx\]
+	What is $\frac{dI}{dt}$
+\end{question}
+\begin{theorem}
+	Suppose that $a,b$ are independent of $t$. If both $f$ and $\frac{\partial f}{\partial t}$ are continuous on the rectangle $[a,b] \times [c,d]$ then
+	\[ \frac{d}{dt} I(t) = \int_a^b \frac{\partial t}{\partial t} (x,t)\,dx \qquad \mathrm{for} \quad t \in [c,d].\]
+\end{theorem}
+\begin{theorem}
+	If $f$ and $\frac{\partial f}{\partial t}$ are continuous on the rectangle $[A, B] \times [c,d]$, where $[a(t),b(t)] \subset [A,B]$ for all $t \in [c,d]$, and if $a(t),b(t)$ are differentiable functions on the interval $[c,d]$ then
+	\[ \frac{d}{dt} I(t) = \int_{a(t)}^{b(t)} \frac{\partial f}{\partial t} (x,t)\, dx + b'(t)f(b(t),t) - a'(t)f(a(t),t) \quad \mathrm{for} \quad t \in [c,d]\]
+\end{theorem}
+\begin{remark}
+	Theorem 2.2 works for any dimensions. What about theorem 2.3?
+\end{remark}
+\section{Integrals of derivatives}
+\begin{theorem}[Divergence theorem]
+	Let $\Omega$ be a ``nice'' open set in $\b R^d$, let $n(\vec x)$ denote the upward pointing normal of $\partial \Omega$. If $F$ is continuously differentiable in $\Omega$, and continuous in $\bar \Omega$, then
+	\[ \int_\Omega \mathrm{div} F \, dx = \int_{\partial \Omega} F(\vec x) \cdot n (\vec x) dS(x).\] 
+\end{theorem}
+\begin{remark}
+	When $d = 1$, this is really the fundamental theorem of calculus.
+	\[ \int_a^n F'(x)\,dx = F(b) - F(a)\]
+\end{remark}
+\begin{theorem}[The first vanishing Theorem]
+	If $f \geq 0$ in $\Omega$ and continuous and $\int_\Omega f(\vec x)\,d\vec x = 0$, then $f = 0$ in $\Omega$
+\end{theorem}
+\begin{theorem}[The second vanishing Theorem]
+	If $f$ is continuous in $\Omega$ and for all $D \subset \Omega$ that
+	\[ \int_D f(\vec x)\, d\vec x = 0\]
+	then $f = 0$ in $\Omega$.
+\end{theorem}
+\begin{proof}
+	Suppose there exists a point $x$ such that $f(x) \neq 0$. Pick a region $D$ around $x$ and we can see that $\int_D f(x) \, dx \neq 0$, a contradiction.
+\end{proof}

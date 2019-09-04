@@ -105,7 +105,7 @@
 \end{example}
 
 
-\section*{Review of Multivariable Calculus}
+\subsection{Review of Multivariable Calculus}
 \begin{definition}
 	Let $\vec x \in \b R^d$, the \textbf{Euclidean length} of $\vec x$ is defined as
 	\[ |\vec x| = \sqrt{\sum_{k=1}^{d} x_k^2}\]
@@ -179,7 +179,7 @@
 	If $|f(x)| \leq M$ for all $x \in \Omega$, then
 	\[ \left|\int_\Omega f(\vec x) \,d \vec x \right|\leq \int_\Omega |f(\vec x)|\,d\vec x \leq M \mathrm{vol}_d(\Omega)\]
 \end{remark}
-\section{Derivatives of Integrals}
+\subsection{Derivatives of Integrals}
 \begin{question}
 	Let $I(t)$ defined as
 	\[\int_{a(t)}^{b(t)} f(x,t)\, dx\]
@@ -196,7 +196,7 @@
 \begin{remark}
 	Theorem 2.2 works for any dimensions. What about theorem 2.3?
 \end{remark}
-\section{Integrals of derivatives}
+\subsection{Integrals of derivatives}
 \begin{theorem}[Divergence theorem]
 	Let $\Omega$ be a ``nice'' open set in $\b R^d$, let $n(\vec x)$ denote the upward pointing normal of $\partial \Omega$. If $F$ is continuously differentiable in $\Omega$, and continuous in $\bar \Omega$, then
 	\[ \int_\Omega \mathrm{div} F \, dx = \int_{\partial \Omega} F(\vec x) \cdot n (\vec x) dS(x).\] 
@@ -216,3 +216,132 @@
 \begin{proof}
 	Suppose there exists a point $x$ such that $f(x) \neq 0$. Pick a region $D$ around $x$ and we can see that $\int_D f(x) \, dx \neq 0$, a contradiction.
 \end{proof}
+\subsection{Some First-order PDEs}
+\subsubsection{Constant Coefficient Linear Equation}
+\begin{example}
+	Find $u = u(x,y)$ such that
+	\[ a u_x + b u_y = 0  \qquad \mathrm{for}\, a,b \in \b R\]
+
+\end{example}
+\begin{proof}[Geometric Method]
+	Notice that we can rewrite the equation as 
+	\[ (a,b) \cdot \nabla u = 0\]
+	Then $u$ is constant in the direction $\vec v = (a,b)$. Let $\vec w  = (b,-a)$ so that we can form a basis in $\b R^2$.
+
+	\begin{center}
+		\begin{tikzpicture}
+			\draw[->, ultra thick] (-1,0) -- (4,0);
+			\draw[->, ultra thick] (0,-1) -- (0,4);
+			\node at (4,0.5) {$x$};
+			\node at (0.5,4) {$y$};
+			\draw[->, color = blue, thick] (0,0) -- (2,3);
+			\draw[->, color = red, thick] (0,0) -- (3,-2);
+			\node at (2,3.5) {$\vec v = (a,b)$};
+			\node at (3,-2.5) {$\vec u = (b,-a)$};
+			\foreach {\x} in {-4,-3,-2,-1,0,1,2}
+			\draw[dashed] (\x,-3) -- (\x + 4, 3);
+		\end{tikzpicture}
+	\end{center}
+	since $u$ is constant on every one of the dashed lines. Then there exists $f : \b R \to \b R$ such that
+	\[ u(x,y) = f(\vec w \cdot (x,y)) = f(bx - ay)\]
+\end{proof}
+\begin{proof}[Brute Force Method]
+	We can simply compute
+	\begin{align*}
+		x' &= ax + by \\
+		y' &= bx - ay \\
+	\end{align*}
+	then we have
+	\begin{align*}
+		\frac{\partial x'}{\partial x} &= a & \frac{\partial x'}{\partial y} &= b \\
+		\frac{\partial y'}{\partial x} &= b & \frac{\partial y'}{\partial y} &= -b 				
+	\end{align*}
+	By the chain rule we have
+	\begin{align*}
+		u_x = \frac{\partial u}{\partial x} = \frac{\partial u}{\partial x'} \frac{\partial x'}{\partial x}	+ \frac{\partial u}{\partial y'} \frac{\partial y'}{\partial x} &= au_{x'} + bu_{y'} \\
+		u_y = \frac{\partial u}{\partial y} = \frac{\partial u}{\partial x'} \frac{\partial x'}{\partial y}	+ \frac{\partial u}{\partial y'} \frac{\partial y'}{\partial y} &= bu_{x'} - au_{y'} \\
+	\end{align*}
+	Hence 
+	\[ 0 = au_x + bu_y = a(au_{x'} + bu_{y'}) + b(bu_{x'} - au_{y'}) - (a^2 \cdot b^2)\]
+	Therefore $u_{x'} = 0$, so $u(x',y') = f(y') = f(bx - ay)$, which gives us the same answer as the geometric method.
+	
+	
+	
+\end{proof}
+\subsubsection{Variable Coefficient PDEs}
+\begin{example}
+	Find $u = u(x,y)$ such that
+	\[ u_x + yu_y = 0\]
+\end{example}
+\begin{proof}[Solution]
+	Similar to the first PDE, we can rewrite the equation as
+	\[ (x,y) \cdot \nabla u = 0 \]
+	\begin{center}
+		\begin{tikzpicture}
+			\begin{axis}[
+				samples=100,domain=-2:5, ymin = -10, ymax = 10,
+				axis y line=middle,
+				axis x line=middle,
+				xlabel=$x$,ylabel=$y$,]
+				\addplot[thick,blue,smooth] plot ({\x}, {exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {2*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {3*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {0.5*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {0.25*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {0.125*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-2*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-3*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-0.5*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-0.25*exp(\x)});
+				\addplot[thick,blue,smooth] plot ({\x}, {-0.125*exp(\x)});
+			\end{axis}
+		\end{tikzpicture}
+
+		The blue lines are called characteristic curves.
+	\end{center}
+	
+	Hence consider curves with slope $y$
+	\[ \frac{dy}{dx} = y.\]
+	Solving for the ODE gives us
+	\[ y = Ce^{x} \qquad C \in \b R.\]
+	Notice that $u$ is constant on the curves.
+	\[ \frac{d}{dx} \left( u \left( x, Ce^{x} \right)  \right) = u_x + u_y \cdot \frac{dy}{dx} = u_x + u_y y = 0. \]
+	Hence
+	\[ u(x, Ce^x) = u(0, Ce^0) = u(0,C)\]
+	is independent of $x$. Now given $(x,y)$ in the place, we compute
+	\[ u(x,y) = u(x,Ce^x)  =u(0,C)  = u(0, e^{-x}y)\]
+	choose $C \in \b R$, we have $C = e^{-x}y \iff y = Ce^x$. Hence 
+	\[ u(x,y) = f(e^{-x}y)\]
+	where $f$ is a elementary function of one variable.
+\end{proof}
+\begin{exercise}
+	Find the solution of the example above such that
+	\[ u(0,y) = y^5\]
+\end{exercise}
+\begin{proof}[Solution]
+	\[ u(0,y) = y^5 \implies u(x,y) = (e^{-x}y)^5 = y^5 e^{-5x}\]
+\end{proof}
+\subsection{Motivation behind PDE}
+\begin{example}[Transport]
+	Suppose a pipe with a pollutant suspend in the water and the water is moving along side the pipe to the right at a rate $c$, then the concentration of the pollution at time $t$ and point $x$ can be modeled as
+	\[ u_t  + c u_x = 0.\]
+\end{example}
+\begin{example}[Vibrating String]
+	Check the derivation in textbook which gives the wave equation. Suppose a string is plucked, then the displacement of the string can be modeled as
+	\[ u_{tt} = c^2 u_{xx}.\]
+	The three dimensional version, a vibrating drumhead can be expressed as
+	\[ u_{tt} = c^2 \left( u_{xx} + u_{yy} \right) \]
+\end{example}
+\begin{example}[Diffusion]
+	Suppose a chemical substance is diffusing through the liquid. The mass of the substance at time $t$ in any given cross section $[x_0,x_1]$ is given by
+	\[ M(t) = \int_{x_0}^{x_1} u(x,t) dx\]
+	We then have
+	\[ \frac{dM}{dt} = \text{flow in} - \text{flow out} = ku_x(x_1,t) - ku_x(x_0,t) = \int_{x_0}^{x_1} u_t(x,t) dx.\]
+	Differentiating with respect to $x$ gives
+	\[u_t = k u_{xx}.\]
+	In $\dim d$ we have 
+	\[ \forall D \subset D_0 \qquad \int_D u_t(x,t) dx \stackrel{\text{Fluid's Law}}{=} \int_{\partial D} k(n \cdot \nabla u) \, dX \stackrel{\text{div thm}}{=} \int_{D} \mathrm{div}\,(k\nabla u)\, dx = \int_D k \triangle u\, dx\]
+	By the second vanishing theorem we have
+	\[ u_t - k \triangle u = 0 \qquad \mathrm{in} \quad D_0\]
+\end{example}

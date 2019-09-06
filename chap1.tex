@@ -136,11 +136,11 @@
 \end{theorem}
 \begin{definition}
 	The \textbf{closure} of $A \subset \b R^d$ is
-	\[ \bar A := A \cup \left\{ \text{ limit points of $A$} \right\}\]
+	\[ A^{-} := A \cup \left\{ \text{ limit points of $A$} \right\}\]
 \end{definition}
 \begin{definition}
 	The boundary of the set $A \subset \b R^d$ is
-	\[ \partial A := A \setminus \mathrm{int} A\]
+	\[ \partial A := A^{-} \setminus \mathrm{int} A\]
 \end{definition}
 \begin{theorem}[Heine-Borel Theorem]
 	A set is closed in $\b R^d$ if and only if it's closed and bounded.
@@ -341,7 +341,95 @@
 	Differentiating with respect to $x$ gives
 	\[u_t = k u_{xx}.\]
 	In $\dim d$ we have 
-	\[ \forall D \subset D_0 \qquad \int_D u_t(x,t) dx \stackrel{\text{Fluid's Law}}{=} \int_{\partial D} k(n \cdot \nabla u) \, dX \stackrel{\text{div thm}}{=} \int_{D} \mathrm{div}\,(k\nabla u)\, dx = \int_D k \triangle u\, dx\]
+	\[ \forall D \subset D_0 \qquad \int_D u_t(x,t) dx \stackrel{\text{Fick's Law}}{=} \int_{\partial D} k(n \cdot \nabla u) \, dX \stackrel{\text{div thm}}{=} \int_{D} \mathrm{div}\,(k\nabla u)\, dx = \int_D k \triangle u\, dx\]
 	By the second vanishing theorem we have
 	\[ u_t - k \triangle u = 0 \qquad \mathrm{in} \quad D_0\]
 \end{example}
+\subsection{Initial and boundary conditions, well-posed problems}
+We have seen a couple of PDE's
+\begin{itemize}
+	\item Convection $u_{x} + c u_{y} = 0$.
+	\item Vibrating string $u_{tt} = c^2 u_{xx}$
+	\item Vibrating drumhead $utt = c^2 \left( u_{xx}  + u_{yy} \right) $
+	\item Diffusion $u_t = k \nabla u$
+	\item Heat $\rho c u_{t}  = \kappa \nabla u$
+	\item Stationary heat flow or vibration $\nabla u = 0$
+\end{itemize}
+ \textbf{Initial Condition} 
+
+	Specify the physical data at a particular time $t_0$.
+	\[ u(x, t_0) = \phi(x)\]
+	where $\phi : \b R^d \to \b R$ is a given function.
+	\begin{example}
+		Let's consider the heat equation. We can set $\phi(x)$ as the initial condition.
+
+		Let's consider the wave equation. Since it's a second order DPE, we need a set of initial conditions
+		\[ u(x, t_0) = \phi(x) \quad\text{initial position}, \qquad u_t(x,t_0) = \psi(x) \quad\text{initial velocity}\]
+	\end{example}
+\textbf{Boundary Conditions}
+
+	We have three important kind of boundary conditions
+	\begin{itemize}
+		\item $u$ is specified (``\textit{Dirichlet} condition'')
+		\item $\frac{\partial u}{\partial n}$ is specified (``\textit{Neumann} Condition'')
+		\item $\frac{\partial u}{\partial n} + au$ is specified (``\textit{Robin} condition'')
+	\end{itemize}
+	By specified we mean the condition is equal to some $f$, where $f$ is a function of time. In the special case of $f = 0$, this is the \textbf{homogeneous} condition.
+	\begin{example}
+		Take a vibrating string in a region $D = \left\{ x \in \b R : 0 \leq x \leq l \right\}$. We have the following
+		\begin{enumerate}
+			\item[(D)] $u(0,t) = g(t), u(l,t) = l(t)$. 
+
+			\textit{Keeping the end of the vibrating string fixed.}
+			\item[(N)] $u_x(0,t) = g(t), u_x(l,t) = l(t)$. 
+			\textit{The left end can move up and down.}
+			\item[(R)] $u_x(0,t) + a(t) u(0,t) = g(t), u_x(l,t) + a(t) u(l,t) = l(t)$.
+
+			\textit{The left end is attached to a spring.}
+		\end{enumerate}
+	\end{example}
+	\begin{example}
+		Take the diffusion equation and suppose $D$ is a container. Take $S = \partial D$. If no substance can exit or enter the container though $S$, then by Fick's Law we have
+		\[ \vec n \cdot \nabla u = 0 \, \mathrm{on} \, S = \partial D = \frac{\partial u}{\partial n}\]
+		If the container is permeable and the substance leaving the container through $\partial D$ is immediately washed away then $u = 0$ on $S = \partial D$, a homogeneous Dirichlet condition.
+	\end{example}
+	\begin{example}
+		Take th heat equation and let $D$ to be the classroom. Suppose that it's perfectly insulated, then there is no heat flow through $\partial D = S \implies \frac{\partial u}{\partial n} = 0 $ on $S$, a Neumann condition. 
+	\end{example}
+	\begin{example}
+		Suppose $D$ is immersed in a large heat bath of temperature $g(t)$ and assume perfect conduction across $S = \partial D \implies u = g(t)$ on $S$, this is a Dirichlet condition.
+	\end{example}
+	\begin{example}
+		Take 
+		\[ u_{t} = u_{xx} + u_{yy} \, \mathrm{in}\, Dx(0, \infty)\]
+		Suppose the initial condition $\frac{\partial u}{\partial n} = 0$ on $\partial Dx(0, \infty)$and $ u = \phi$ on $Dx(t = 0)$.
+	\end{example}
+\textbf{Well-posed}
+\begin{definition}[informal]
+	A problem (of Solving PDE) with certian boundary conditions is well-posed if
+	\begin{enumerate}
+		\item Existence
+		\item Uniqueness
+		\item Stability
+	\end{enumerate}
+\end{definition}
+\begin{example}
+	From last lecture we had
+	\[ \left\{ \begin{array}{rl} 
+		a u_{x} b u_{y}  &= 0  \\
+		u(0,y) &= f(y)  \\
+	\end{array} \right. \]
+	has the unique solution $u(x,y) = f \left( e^{-x}y \right)$, so existence and uniqueness is check.
+
+	Let $f, \tilde f$ be two initial conditions, then 
+	\[ |u(x,y)| - \tilde u(x,y)|  = |f\left(e^{-x}y\right) - \tilde f \left( e^{-x} y \right)|\]
+	so for example
+	\[ \max|u(x,y)| - \tilde u(x,y)|  \leq \max|f\left(e^{-x}y\right) - \tilde f \left( e^{-x} y \right)|\]
+	Then stability is satisfied as well.
+\end{example}
+\begin{example}[A famous example]
+	Take $\triangle u = u_{xx} + u_{yy} = 0$.
+
+\end{example}
+
+

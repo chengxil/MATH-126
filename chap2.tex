@@ -1,0 +1,64 @@
+%!TEX root = ./main.tex
+\section{Waves and Diffusion}
+\subsection{The wave equation}
+Recall that the wave equation in in dimension
+\[ u_{tt} = c^2 u_{xx} \quad \mathrm{for} \quad -\infty < x,t < \infty\]
+Observe that
+\[ 0 = u_{tt} - c^2 u_{xx} = \left( \frac{\partial }{\partial t} - c \frac{\partial }{\partial x} \right) \left( \frac{\partial }{\partial t} + c \frac{\partial }{\partial x} \right)v  =: v \]
+We can equivalently write our second order PDE as 
+\[\left\{ \begin{array}{rl} 
+	u_{t} + c u_{x} &= v \quad (2) \\
+	v_t - c v_x &= 0 \quad (1) \\
+\end{array} \right. \]
+We know that the general solution to (1) is
+\[ v(x,t) = h(x + ct)\]
+where $h$ is an arbitrary function of one variable. Then substituting $v$ into (2) gives us
+\[ u_t + cu_x = h(x + ct)\]
+We know that one particular solution is given by $u(x,t) = f(x,t)$, where 
+\[ f'(s) = \frac{h(s)}{2t}\]
+To that, we can add any of the homogeneous solution
+\[ u_t + c u_x = 0 \implies u(x,t) = f(x + ct) + g(x - ct)\]
+Hence we have shown that 
+\[ u(x,t) = f(x + ct)  - g(x - ct)\]
+where $f,g$ are arbitrary function.
+\subsubsection{Characteristic coordinates}
+Take
+\[ \xi = x + ct \qquad \eta = x - ct\]
+By the chain rule we have
+\[ \partial_x = \frac{\partial}{\partial x} = \frac{\partial }{\partial \xi} \frac{\partial \xi}{\partial x} + \frac{\partial }{\partial \eta} \frac{\partial \eta}{\partial x} = \partial_\xi + \partial_\eta\]
+\[ \partial_t = \frac{\partial}{\partial t} = \frac{\partial }{\partial \xi} \frac{\partial \xi}{\partial t} + \frac{\partial }{\partial \eta} \frac{\partial \eta}{\partial t} = c\partial_\xi - c\partial_\eta \]
+Hence
+\[ \partial_t - c \partial_x = -2c \partial_\eta \qquad \partial_t + c \partial_x = 2c \partial_\xi\]
+SO the wave equation is of the form
+\[ 0 = (\partial _t - c\partial_x)(\partial_t + cd_x)u = (-4c \partial_\xi)(2c\partial_\eta)u = -4c^2\partial u_{\xi \eta}\]
+Since $-4c^2 \neq 0$, we have $u_{\xi \eta} = 0$.
+So $u(x,y) = f(\xi) + g(\eta)$.
+\subsubsection{Initial Value Problem}
+Take 
+\[ \left\{ \begin{array}{rl} 
+	u_{tt}  &= c^2 u_{xx}   \\
+	u(x,0) &= \phi(x) \\
+	u_t(x,0) &= \psi(x)
+\end{array} \right. \]
+where $\phi(x) = \sin x$, and $\psi(x) = 0$.
+From the general solution we put $t = 0$ and obtain.
+\[ \phi(x) = f(x) + g(x)\]
+differential by $t$ we get
+\[ \psi(x) = cf'(x) - cg'(x)\]
+differentiate $\phi$ and divide $\psi$ by $c$ we get
+\[ \phi's = f' + g' \qquad \frac1c \psi = f' - g'\]
+Solving for $f'$ and $g'$ gives us
+\[ f' = \frac 12 \left( \phi' + \frac \psi c \right) \qquad g' = \frac 12 \left( \phi' - \frac \psi c \right)  \]
+Integrate with respect to $s$ gives us
+\[ f(s) = \frac 12 \phi(s) + \frac 1{2c} \int_0^s \psi + A \qquad f(s) = \frac 12 \phi(s) - \frac 1{2c} \int_0^s \psi + B\]
+where $A,B$ are constants. Since $\phi(x) = f(x) + g(x)$, we have $A + B = 0$. Let $s = x + ct$ and $s = x - ct$ we get
+\[u(x, t)=\frac{1}{2} \phi(x+c t)+\frac{1}{2 c} \int_{0}^{x+c t} \psi+\frac{1}{2} \phi(x-c t)-\frac{1}{2 c} \int_{0}^{x-c t} \psi\]
+which is reduced to 
+\[ \boxed{u(x,t) = \frac12 \left[ \phi(x + ct) + \phi(x - ct) \right] + \frac 1 {2c} \int_{x - ct}^{x + ct} \psi(s) d(s)}\]
+\begin{example}
+	Take $\phi = 0$ and $\psi = \cos x$. Solve for the wave equation.
+\end{example}
+
+\subsection{Causality and Energy}
+
+

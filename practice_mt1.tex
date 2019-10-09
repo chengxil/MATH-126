@@ -1,0 +1,131 @@
+\documentclass[12pt,letterpaper]{article}
+%\usepackage[secthm,mdthm,simplethm]{beel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx, tcolorbox}
+\usepackage[margin = 1in, top = 0.8in,bottom = 0.8in]{geometry}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage{array,comment,enumitem}
+\usepackage{mathtools,thmtools}
+\usepackage{multicol,tabto,setspace}
+\usepackage{tikz,pgfplots,tikz-cd,venndiagram,forest}
+\usepackage[all]{xy}
+\usepackage{listings,fancyhdr}
+\pagestyle{fancy}
+
+\headheight = 15 pt
+\lhead{Bill Li}
+\rhead{Partial Differential Equation}
+\cfoot{\thepage}
+\pgfplotsset{compat = 1.15}
+\usetikzlibrary{fadings}
+
+\hbadness = 10000
+\tolerance = 10000
+
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\bar}{\overline}
+\renewcommand{\b}{\mathbb}
+\renewcommand{\c}{\mathcal}
+\newcommand{\s}{\mathscr}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Unofficial Solution to Practice Problem}}
+\end{center}
+\begin{enumerate}
+	\item Find the solution $u = u(x,t)$ to
+	\[ \left\{ \begin{array}{ll} 
+		u_t + 3xu_x = 0 & \mathrm{for} \quad - \infty < x < \infty, -\infty < t < \infty \\
+		u(x,0) = \sin x & \mathrm{for} \quad -\infty < x < \infty \\
+	\end{array} \right. \]
+	\begin{proof}[Solution]
+		Observe that the solution of the PDE must be tangent to $(1,3x)$ all the time. Therefore we have
+		\[ \frac{dx}{dt} = \frac{3x}{1} \]
+		Solving for the ODE gives us
+		\[ x = Ce^{3t} \]
+		Since $ u_t + 3xu_x = 0$, the curve is independent of $t$. Solving for $C$ gives us $C = e^{-3t}x$, therefore we can rewrite $u$ as a function of one variable.
+		\[u(x,t) = u(Ce^{3t},t) = u(C,0) = f(e^{-3t}x)\]
+		Now we plug in the initial condition we have
+		\begin{align*}
+		 	u(x,0) = f(e^{-3 \cdot 0} x) = \sin x \implies f(x) = \sin x, 
+		\end{align*}
+		therefore the solution to the PDE is
+		\[ u(x,t) = \sin(e^{-3t}x)\]
+		
+	\end{proof} 
+	\newpage
+	\item \begin{enumerate}
+		\item Find the coefficients of the Fourier cosine Series of $f(x) = x$ on $[0,\pi]$.
+		\begin{proof}
+			Let $l = \pi$. We know the full Fourier Series of $f(x)$ is of the form
+			\[ x = \frac 12 A_0 + \sum_{n = 1}^\infty A_n \cos \frac{n \pi x}{l}.\]
+			We shall compute for $A_0$ first
+			\[ A_0 = \frac 2l \int_0^l x \cdot 1 \, \mathrm{d}x = \pi.\]
+			Then for $n \neq 0$ we have
+			\begin{align*}
+				A_n &= \frac 2l \int_0^l x \cdot \cos \frac{n \pi x}{l} \, \mathrm{d}x \\
+				&= \frac 2l \left[ \frac{l}{n \pi} x \cdot \sin \frac{n \pi x}{l} + \frac{l^2}{(n\pi)^2} \cos \frac{n \pi x}{l}  \right]_0^l \\
+				&= \frac 2\pi \left[ \frac 1nx \cdot \sin nx + \frac 1{n^2} \cos nx \right]_0^\pi \\
+				&= \frac{2}{\pi n^2}  \left( \cos n \pi - \cos 0 \right) \\
+				&= \frac{2}{\pi n^2} ((-1)^n - 1)
+			\end{align*}
+			Therefore the Fourier cosine series for $x$ is
+			\[x = \frac \pi 2  - \sum_{n=1}^{\infty} \frac{4}{2n \pi} \cos n x\]
+			Therefore we have
+			\[A_n = \left\{ \begin{array}{ll} 
+				-\frac{4}{n\pi} & n \, \mathrm{odd} \\
+				0 & n \, \mathrm{even} \\
+			\end{array} \right. \]
+			Therefore the Fourier cosine series for $x$ is 
+			\[ x = \frac \pi 2 - \sum_{n=1}^{\infty} \frac{4}{(2n + 1)\pi} \cos(2n +1) x\]
+			
+		\end{proof} 
+		\item Prove that the cosine series converges uniformly in $[0,\pi]$. (\textit{Difficult!})
+		\item Does the Fourier sine series of $f$ converges uniformly on $[0, \pi]$?
+		\begin{proof}
+			No,it does not converge. Suppose there exists a Fourier sine series that converge to $x$. Then the sine series must be of the form
+			\[ f(x) = \sum_{n=1}^{\infty} A_n \sin n x\]
+			Then we compute
+			\[ f(\pi) = \sum_{n=1}^{\infty} A_n \sin n \pi = 0\]
+			However, we have $f(\pi) = \pi$. Therefore the sine series does not converge to $x$ on $[0,\pi]$.
+		\end{proof} 
+	\end{enumerate}
+	\item Suppose $u = u(x,t)$ solves
+	\[ \left\{ \begin{array}{ll} 
+		u_t - u_{xx} = f(u) & \mathrm{for} \quad 0 < x <l, t \geq 0 \\
+		u(0,t) = u(l,t) = 0 &  \mathrm{for} \quad t \geq 0\\
+	\end{array} \right. \]
+	where $f(s) = -F'(s)$ is a given function. Show that
+	\[ \frac{d}{dx} \int_0^l \frac 12 u_x^2 (x,t) + F(u(x,t)) \, dx \leq 0.\]
+	\item Let $u = u(x,t)$ solves 
+	\[ \left\{ \begin{array}{ll} 
+		u_{xx} + u_{yy}  = -\lambda u & \mathrm{for} \quad x^2 + y^2 <1 \\
+		u = 0 & \mathrm{for} \quad x^2 + y^2 = 1 \\
+	\end{array} \right. \]
+	where $\lambda > 0$.
+	\begin{enumerate}
+		\item State the polar form of the $2$-dimensional Laplace operator.
+		\item If $u = R(r)\Theta(\theta)$, which ODEs do $R$ and $\Theta$ solve?
+		\item Solve the ODE for $\Theta$. (\textit{You don't have to solve the more difficult ODE for $R$; its solutions are called Bessel functions.})
+	\end{enumerate}
+	\item Let $u = u(x,t)$ solve $u_t + \nabla \cdot \mathbf F = 0$ where $\mathbf F = \mathbf F(\mathbf x) = (F_{1}, F_2, \ldots, F_{d})$ is a given vector field and let $D$ be an open set. Find a formula for 
+	\[ \frac{d}{dt} \int_D u(\mathbf x,t) \, d\mathbf x\]
+	which only depends on the values of $\mathbf F$ on $\partial D$.
+	\item Consider the linear wave equation
+	\[ \left\{ \begin{array}{ll} 
+		u_{tt} - c^2 u_{xx} = f(x,t) & \mathrm{for} \quad - \infty < x < \infty, -\infty < t < \infty \\
+		u(x,0) = \phi(x) & \mathrm{for} \quad - \infty < x < \infty	 \\
+		u_t(x,0) = \psi(x) & \mathrm{for} - \infty < x < \infty
+	\end{array} \right. \]
+	\begin{enumerate}
+		\item Sketch the domain of dependence of the point $(x,t) = (1,1)$ in the $(x,t)$-plane in case $c = 1$. Do the same in the case $c = 2$.
+		\item State the general solution formula for this problem in terms of the data $f, \phi, \psi$.
+		\item If $\phi = \psi = 0$ and $f \geq 0$, show that $u \geq 0$.
+		\item If $\psi = 0$ and $f = 0$, show that $\max_{x,t}|u| \leq \max_x |\phi|$.
+	\end{enumerate}
+\end{enumerate}
+\newpage
+
+\[ \phi \quad \varphi \quad \psi \quad \epsilon \quad \varepsilon\]
+\end{document}
